@@ -1,0 +1,56 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: Verdana;
+}
+h1 {
+    width: 700px;
+    margin: 20px auto;
+    text-align: center;
+}
+#rootQuestions{
+    display: none;
+}
+.question {
+    width: 700px;
+    margin: 10px auto;
+    font-size: large;
+    box-shadow: 5px 5px 5px #999999;
+    padding: 20px;
+    border-radius:10px;
+    border: 1px solid #999999;
+}
+.question img {
+    width: 200px;
+    height: 200px;
+}
+.start,.end {
+    margin: 20px auto;
+    height: 70px;
+    text-align: center;
+}
+button {
+    height: 36px;
+    font-size: 15px;
+    line-height: 36px;
+    padding: 0 20px;
+}
+.answer {
+    margin: 10px;
+}
+.answer input {
+    margin-right: 10px;
+}
+#result {
+    width: 700px;
+    margin: 10px auto;
+    font-size: large;
+
+}
+#result .yes {
+    color: green !important;
+
+}
+#result .not {
+    color: red !important;
+}

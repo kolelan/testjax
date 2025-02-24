@@ -5,28 +5,34 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script type="text/javascript">
         const questions = [
             [
-                {question: "8 часов 40 минут", answer: 0},
-                {question: "8 часов ровно", answer: 1},
-                {question: "9 часов ровно", answer: 0},
-                {question: "9 часов 40 минут", answer: 0},],
+                {question: "16", answer: 0},
+                {question: "40", answer: 1},
+                {question: "1600", answer: 0},
+                {question: "400", answer: 0},],
             [
-                {question: "81174,8 руб.", answer: 0},
-                {question: "536060 руб.", answer: 0},
-                {question: "568223,6 руб.", answer: 1},
-                {question: "459480", answer: 0},],
+                {question: "Вариант А", answer: 0},
+                {question: "Вариант Б", answer: 0},
+                {question: "Вариант В", answer: 1},
+                {question: "Вариант Г", answer: 0},],
             [
-                {question: "4 пачки", answer: 0},
-                {question: "5 пачек", answer: 0},
-                {question: "6 пачек", answer: 0},
-                {question: "7 пачек", answer: 1},],
+                {question: "4", answer: 0},
+                {question: "16", answer: 0},
+                {question: "-1", answer: 0},
+                {question: "-4", answer: 1},],
             [
-                {question: "850 рублей", answer: 0},
-                {question: "860 рублей", answer: 1},
-                {question: "900 рублей", answer: 0},
-                {question: "1000 рублей", answer: 0},],
+                {question: "Вариант А", answer: 1},
+                {question: "Вариант Б", answer: 0},
+                {question: "Вариант В", answer: 0},
+                {question: "Вариант Г", answer: 0},],
+            [
+                {question: "Вариант А", answer: 0},
+                {question: "Вариант Б", answer: 0},
+                {question: "Вариант В", answer: 0},
+                {question: "Вариант Г", answer: 1},],
         ]
     </script>
     <script type="text/javascript" defer src="assets/testjax.js"></script>
@@ -36,36 +42,99 @@
 <body>
 <h1>Тест по математике для лекции № 1</h1>
 <p style="text-align: center">У вас есть 5 минут на выполнение задания.</p>
+<p style="text-align: center">Из Четырёх Вариантов Ответа<br>
+    Выберите Единственно Правильный </p>
 <div class="start">
     <button id="buttonStart">Начать</button>
 </div>
 <div class="questions" id="rootQuestions" style="display: none">
     <div class="question" id="1">
         <h2>Вопрос 1</h2>
-        <div><img src="assets/quest-1.webp"></div>
-        <p>Поезд отправился из Санкт-Петербурга в 23 часа 50 минут (время московское) и прибыл в Москву в 7 часов 50
-            минут следующих суток. Сколько часов поезд находился в пути?</p>
+        <p>\[\sqrt{58^2-42^2}-?\]</p>
     </div>
     <div class="question" id="2">
         <h2>Вопрос 2</h2>
-        <div><img src="assets/quest-2.webp"></div>
-        <p>В начале туристического сезона путевка в Испанию на одного человека в агентстве «Отдых у моря» стоила 76580
-            рублей. 1 августа в связи с изменением курса евро цену подняли на шесть процентов. Какую сумму в рублях
-            отдала за отдых группа из 7 друзей, если двое из них успели купить путевки по первоначальной цене, а
-            остальные обратились в агентство после 1 августа?</p>
+        <p class="bigCenter">\[(a^{2m})^{m/2}-?\]</p>
+        <table style="width: 100%">
+            <tr>
+                <th>
+                    A:
+                </th>
+                <th>
+                    Б:
+                </th>
+                <th>
+                    В:
+                </th>
+                <th>
+                    Г:
+                </th>
+            <tr>
+                <td>
+                    \[a^m\]
+                </td>
+                <td>
+                    \[a^{{2\over 3}*m}\]
+                </td>
+                <td>
+                    \[a^{m^2}\]
+                </td>
+                <td>
+                    \[a^{m^2+{5\over 2}}\]
+                </td>
+            </tr>
+        </table>
     </div>
+
     <div class="question" id="3">
         <h2>Вопрос 3</h2>
-        <div><img src="assets/quest-3.webp"></div>
-        <p>Больному прописано лекарство, которое нужно принимать по 0,5г 4 раза в день в течение 7 дней. В одной
-            упаковке 8 таблеток лекарства по 0,25 г. Какого наименьшего количества упаковок хватит на весь курс
-            лечения?</p>
+        <p> \[(\sqrt{21}-5)(\sqrt{21}+5) - ?\]</p>
     </div>
     <div class="question" id="4">
         <h2>Вопрос 4</h2>
-        <div><img src="assets/quest-4.webp"></div>
-        <p>Тане нужно оплатить квитанцию за электроэнергию на сумму 835  руб. 35 коп. Платежный терминал принимает купюры достоинством в 10, 50, 100, 500, 1000 рублей и берет комиссию 1% от внесенной суммы. Какую сумму в рублях следует внести, чтобы оплатить квитанцию?</p>
+        <p>\[ {3^{9,5}\over 9^{4,25} }-?\]</p>
+        <table style="width: 100%">
+            <tr>
+                <th>A</th>
+                <th>Б</th>
+                <th>В</th>
+                <th>Г</th>
+            </tr>
+            <tr>
+                <td>3
+                </td>
+                <td>\[1\over 3\]
+                </td>
+                <td>\[3^{5,25}\]
+                </td>
+                <td>\[3^{5,5}\]
+                </td>
+            </tr>
+        </table>
     </div>
+    <div class="question" id="5">
+        <h2>Вопрос 5</h2>
+        <p>\[ (2a)^m(3b)^m -?\]</p>
+        <table style="width: 100%">
+            <tr>
+                <th>A</th>
+                <th>Б</th>
+                <th>В</th>
+                <th>Г</th>
+            </tr>
+            <tr>
+                <td>\[ (5ab)^m\]
+                </td>
+                <td>\[ (2a+3b)^m\]
+                </td>
+                <td>\[ (-ab)^m\]
+                </td>
+                <td>\[ (6ab)^m\]
+                </td>
+            </tr>
+        </table>
+    </div>
+
     <div class="end">
         <button id="buttonDone">Отправить на проверку</button>
     </div>

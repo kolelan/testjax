@@ -2,7 +2,11 @@
 
 (function () {
     const params = {
-        messages: {resultTimeMessage: "Выполнено за "},
+        messages: {
+            resultTimeMessage: "Выполнено за ",
+            resultSuccessMessage: "Результаты позволяют приступить к следующему заданию!",
+            resultUnsuccessMessage: "Рекомендуется пройти тест повторно",
+        },
         ids: {
             root: "#rootQuestions",
             start: "#buttonStart",
@@ -17,6 +21,7 @@
             resultTag: "div",
             resultId: "result",
         },
+        successPoints: 60,
         startTestTime: undefined,
         endTestTime: undefined,
     }
@@ -82,18 +87,21 @@
                 store.userAnswers.push(answer.getAttribute('data-answer'));
             }
         });
-        store.userAnswers.forEach(function (answer, index){
+        store.userAnswers.forEach(function (answer, index) {
             let numQuestion = parseInt(index) + 1;
-            if(answer===store.rightAnswers[index]){
+            if (answer === store.rightAnswers[index]) {
                 store.pointsForTest += store.pointsPerQuestion;
                 store.result.innerHTML += 'Вопрос ' + numQuestion + ': "' + answer + '" <span class="yes">правильно!</span><br>';
-            }else{
+            } else {
                 store.result.innerHTML += 'Вопрос ' + numQuestion + ': "' + answer + '" <span class="not">ошибка!</span><br>';
             }
         });
         store.result.innerHTML += 'Общая оценка: ' + Math.ceil(store.pointsForTest) + ' баллов.<br>';
+        if (Math.ceil(store.pointsForTest) > params.successPoints) {
+            store.result.innerHTML += '<span class="yes">' + params.messages.resultSuccessMessage + '</span>';
+        } else {
+            store.result.innerHTML += '<span class="not">' + params.messages.resultUnsuccessMessage + '</span>';
+        }
         window.scrollTo(0, document.body.scrollHeight);
     });
-
-
 }());

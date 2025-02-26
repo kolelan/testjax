@@ -36,8 +36,9 @@
 }
 #result {
     width: 700px;
-    margin: 10px auto;
+    margin: 10px auto 50px auto;
     font-size: x-large;
+    padding-bottom: 50px;
 
 }
 #result .yes {

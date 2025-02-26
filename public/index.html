@@ -5,42 +5,13 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script type="text/javascript">
-        const questions = [
-            [
-                {question: "16", answer: 0},
-                {question: "40", answer: 1},
-                {question: "1600", answer: 0},
-                {question: "400", answer: 0},],
-            [
-                {question: "Вариант А2", answer: 0},
-                {question: "Вариант Б2", answer: 0},
-                {question: "Вариант В2", answer: 1},
-                {question: "Вариант Г2", answer: 0},],
-            [
-                {question: "4", answer: 0},
-                {question: "16", answer: 0},
-                {question: "-1", answer: 0},
-                {question: "-4", answer: 1},],
-            [
-                {question: "Вариант А4", answer: 1},
-                {question: "Вариант Б4", answer: 0},
-                {question: "Вариант В4", answer: 0},
-                {question: "Вариант Г4", answer: 0},],
-            [
-                {question: "Вариант А5", answer: 0},
-                {question: "Вариант Б5", answer: 0},
-                {question: "Вариант В5", answer: 0},
-                {question: "Вариант Г5", answer: 1},],
-        ]
-    </script>
+    <script type="text/javascript" defer src="assets/section1_test1.js"></script>
     <script type="text/javascript" defer src="assets/testjax.js"></script>
     <link rel="stylesheet" href="assets/style.css">
     <title>Пример подключения теста</title>
 </head>
 <body>
-<h1>Тест по математике для лекции № 1</h1>
+<h1 class="test_title">Тест по математике для лекции № 1</h1>
 <p style="text-align: center">У вас есть 5 минут на выполнение задания.</p>
 <p style="text-align: center">Из Четырёх Вариантов Ответа<br>
     Выберите Единственно Правильный </p>
@@ -48,97 +19,24 @@
     <button id="buttonStart">Начать</button>
 </div>
 <div class="questions" id="rootQuestions" style="display: none">
-    <div class="question" id="1">
-        <h2>Вопрос 1</h2>
-        <p>\[\sqrt{58^2-42^2}-?\]</p>
+    <div class="question">
+        <img src="https://storage.yandexcloud.net/logvinov/razdel1_test_1_question_1.jpg">
     </div>
-    <div class="question" id="2">
-        <h2>Вопрос 2</h2>
-        <p class="bigCenter">\[(a^{2m})^{m/2}-?\]</p>
-        <table style="width: 100%">
-            <tr>
-                <th>
-                    A2:
-                </th>
-                <th>
-                    Б2:
-                </th>
-                <th>
-                    В2:
-                </th>
-                <th>
-                    Г2:
-                </th>
-            <tr>
-                <td>
-                    \[a^m\]
-                </td>
-                <td>
-                    \[a^{{2\over 3}*m}\]
-                </td>
-                <td>
-                    \[a^{m^2}\]
-                </td>
-                <td>
-                    \[a^{m^2+{5\over 2}}\]
-                </td>
-            </tr>
-        </table>
+    <div class="question">
+        <img src="https://storage.yandexcloud.net/logvinov/razdel1_test_1_question_2.jpg">
     </div>
-
-    <div class="question" id="3">
-        <h2>Вопрос 3</h2>
-        <p> \[(\sqrt{ 21 } - 5)(\sqrt{ 21 } + 5) - ?\]</p>
+    <div class="question">
+        <img src="https://storage.yandexcloud.net/logvinov/razdel1_test_1_question_3.jpg">
     </div>
-    <div class="question" id="4">
-        <h2>Вопрос 4</h2>
-        <p>\[ {3^{9,5}\over 9^{4,25} }-?\]</p>
-        <table style="width: 100%">
-            <tr>
-                <th>A4</th>
-                <th>Б4</th>
-                <th>В4</th>
-                <th>Г4</th>
-            </tr>
-            <tr>
-                <td>\[ 3 \]
-                </td>
-                <td>\[1\over 3\]
-                </td>
-                <td>\[3^{5,25}\]
-                </td>
-                <td>\[3^{5,5}\]
-                </td>
-            </tr>
-        </table>
+    <div class="question">
+        <img src="https://storage.yandexcloud.net/logvinov/razdel1_test_1_question_4.jpg">
     </div>
-    <div class="question" id="5">
-        <h2>Вопрос 5</h2>
-        <p>\[ (2a)^m(3b)^m -?\]</p>
-        <table style="width: 100%">
-            <tr>
-                <th>A5</th>
-                <th>Б5</th>
-                <th>В5</th>
-                <th>Г5</th>
-            </tr>
-            <tr>
-                <td>\[ (5ab)^m\]
-                </td>
-                <td>\[ (2a+3b)^m\]
-                </td>
-                <td>\[ (-ab)^m\]
-                </td>
-                <td>\[ (6ab)^m\]
-                </td>
-            </tr>
-        </table>
+    <div class="question">
+        <img src="https://storage.yandexcloud.net/logvinov/razdel1_test_1_question_5.jpg">
     </div>
-
     <div class="end">
         <button id="buttonDone">Отправить на проверку</button>
     </div>
 </div>
-
 </body>
 </html>

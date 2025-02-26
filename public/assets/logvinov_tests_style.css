@@ -1,28 +1,35 @@
-
-.test_title {
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: Verdana;
+}
+h1 {
     width: 700px;
     margin: 20px auto;
     text-align: center;
 }
-
+#rootQuestions{
+    display: none;
+}
 .question {
     width: 700px;
     margin: 10px auto;
     font-size: large;
+    box-shadow: 5px 5px 5px #999999;
     padding: 20px;
-
+    border-radius:10px;
+    border: 1px solid #999999;
 }
 .question img {
-    width: 100%;
-    border-radius: 5px;
-
+    width: 200px;
+    height: 200px;
 }
 .start,.end {
     margin: 20px auto;
     height: 70px;
     text-align: center;
 }
-#buttonDone, #buttonStart {
+button {
     height: 36px;
     font-size: 15px;
     line-height: 36px;
@@ -37,7 +44,7 @@
 #result {
     width: 700px;
     margin: 10px auto;
-    font-size: x-large;
+    font-size: large;
 
 }
 #result .yes {
@@ -46,20 +53,4 @@
 }
 #result .not {
     color: red !important;
-}
-.answersForQuestion {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    background-color: #fff;
-    height: 100%;
-    padding: 15px;
-    gap: 5px;
-}
-
-.answersForQuestion > p{
-    background: #ffecb3;
-    border: 3px solid #ffcc80;
-    border-radius: 5px;
-    padding: 8px;
 }

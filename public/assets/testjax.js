@@ -1,100 +1,99 @@
 "use strict";
-const params = {
-    "root": "#rootQuestions",
-    "start": "#buttonStart",
-    "done": "#buttonDone",
-    "question": ".question",
-    "result": "result",
-    "resultMessage": "Выполнено за ",
-}
-let time;
-let endTime;
-let doneTime;
-let result;
-let allQuestions;
-let rightAnswersArray = rightAnswers(questions);
-const pointsPerQuestion = Math.round((100 / questions.length) * 100) / 100;
-let pointsForTest = 0;
-const start = document.querySelector(params.start);
-start.addEventListener('click', function (e) {
-    time = new Date().getTime();
-    allQuestions = document.querySelectorAll(params.question);
-    var i = 0;
-    allQuestions.forEach(function (question) {
-        const form = document.createElement('form');
-        let j = 0;
-        questions[i].forEach(function (element) {
-            const p = document.createElement('p');
-            p.className = "answer";
-            const input = document.createElement('input');
-            const label = document.createElement('label');
-            const inputId = 'answer_' + i + '_' + j;
-            input.id = inputId;
-            label.htmlFor = inputId;
-            label.innerHTML = element.question;
-            input.type = "radio";
-            input.name = "question_" + i;
-            input.className = "answer";
-            input.setAttribute("data-answer", element.question);
-            j++;
-            p.append(input);
-            p.append(label);
-            form.append(p);
-        });
-        i++;
-        question.append(form);
-    });
-    const rootElement = document.querySelector(params.root);
-    if (rootElement.style.display === "none") {
-        rootElement.style.display = "block";
-        start.setAttribute("disabled", "disabled");
+
+(function () {
+    const params = {
+        messages: {resultTimeMessage: "Выполнено за "},
+        ids: {
+            root: "#rootQuestions",
+            start: "#buttonStart",
+            done: "#buttonDone",
+            question: ".question",
+            result: "result",
+            answerFormClass: "answersForQuestion",
+            answerItemTag: "p",
+            answerItemClass: "answersItem",
+            answerRadioTagName: "answer",
+            answerRadioTagClass: "answerRadio",
+            resultTag: "div",
+            resultId: "result",
+        },
+        startTestTime: undefined,
+        endTestTime: undefined,
     }
-    result = document.createElement('div');
-    result.id = params.result;
-    document.body.append(result);
-
-}, false);
-const done = document.querySelector(params.done);
-done.addEventListener('click', function (e) {
-    endTime = new Date().getTime();
-    doneTime = new Date(endTime - time);
-    const resultTimeHtml = document.createTextNode(params.resultMessage + doneTime.getMinutes() + ' мин:' + doneTime.getSeconds() + ' сек');
-    const resultTime = document.createElement('div');
-    resultTime.appendChild(resultTimeHtml);
-    result.append(resultTime);
-    done.setAttribute("disabled", "disabled");
-    const answers = document.querySelectorAll('.answer');
-    answers.forEach(function (answer) {
-        if (answer.checked) {
-            let answerCheck = checkAnswer(answer);
-            const questionNum = parseInt(answer.name.split('_').pop()) + 1;
-            if (answerCheck === true) {
-                pointsForTest += pointsPerQuestion;
-                result.innerHTML += 'Вопрос ' + questionNum + ': "' + answer.getAttribute('data-answer') + '" <span class="yes">правильно!</span><br>';
-            } else {
-                result.innerHTML += 'Вопрос ' + questionNum + ': "' + answer.getAttribute('data-answer') + '" <span class="not">ошибка!</span><br>';
-            }
+    const store = {
+        rightAnswers: answers.map(function (answer, index) {
+            return answer.filter(function (item) {
+                return item.value === 1;
+            }).pop().name;
+        }),
+        userAnswers: [],
+        pointsForTest: 0,
+        pointsPerQuestion: Math.round((100 / answers.length) * 100) / 100
+    };
+    const start = document.querySelector(params.ids.start);
+    start.addEventListener('click', function (e) {
+        params.startTestTime = new Date().getTime();
+        const rootElement = document.querySelector(params.ids.root);
+        if (rootElement.style.display === "none") {
+            rootElement.style.display = "block";
+            start.setAttribute("disabled", "disabled");
         }
-    });
-    result.innerHTML += 'Общая оценка: ' + Math.ceil(pointsForTest) + ' баллов.<br>';
-});
-
-
-function rightAnswers(questions) {
-    return questions.map(function (question) {
-        return question.filter(function (answer) {
-            return answer.answer;
+        store.allQuestions = document.querySelectorAll(params.ids.question);
+        store.allQuestions.forEach(function (question, i) {
+            const form = document.createElement('form');
+            form.className = params.ids.answerFormClass;
+            answers[i].forEach(function (answer, j) {
+                const answerItem = document.createElement(params.ids.answerItemTag);
+                answerItem.className = params.ids.answerItemClass;
+                const input = document.createElement('input');
+                const label = document.createElement('label');
+                const id = 'answer_' + i + '_' + j;
+                input.id = id;
+                label.htmlFor = id;
+                label.innerHTML = answer.name;
+                input.setAttribute('data-answer', answer.name);
+                input.type = "radio";
+                input.name = params.ids.answerRadioTagName + "_" + i;
+                input.className = params.ids.answerRadioTagClass;
+                answerItem.append(input);
+                answerItem.append(label);
+                form.append(answerItem);
+            });
+            question.append(form);
         });
-    });
-}
+        store.result = document.createElement(params.ids.resultTag);
+        store.result.id = params.ids.resultId;
+        document.body.append(store.result);
 
-function checkAnswer(answer) {
-    const answerValue = answer.getAttribute("data-answer");
-    let rightAswers = rightAnswersArray.map(function (rightAnswer) {
-        if (rightAnswer[0].question === answerValue) return true;
-    }).filter(function (rightAnswer) {
-        return rightAnswer;
     });
-    if (rightAswers.length === 1 && rightAswers[0] === true) return true;
-}
+    store.done = document.querySelector(params.ids.done);
+    store.done.addEventListener('click', function (e) {
+        params.endTestTime = new Date().getTime();
+        store.doneTime = new Date(params.endTestTime - params.startTestTime);
+        const resultTimeHtml = document.createTextNode(params.messages.resultTimeMessage + store.doneTime.getMinutes() + ' мин:' + store.doneTime.getSeconds() + ' сек');
+        const resultTime = document.createElement('div');
+        resultTime.appendChild(resultTimeHtml);
+        store.result.append(resultTime);
+        store.done.setAttribute("disabled", "disabled");
 
+        const answers = document.querySelectorAll('.' + params.ids.answerRadioTagClass);
+        answers.forEach(function (answer) {
+            if (answer.checked) {
+                store.userAnswers.push(answer.getAttribute('data-answer'));
+            }
+        });
+        store.userAnswers.forEach(function (answer, index){
+            let numQuestion = parseInt(index) + 1;
+            if(answer===store.rightAnswers[index]){
+                store.pointsForTest += store.pointsPerQuestion;
+                store.result.innerHTML += 'Вопрос ' + numQuestion + ': "' + answer + '" <span class="yes">правильно!</span><br>';
+            }else{
+                store.result.innerHTML += 'Вопрос ' + numQuestion + ': "' + answer + '" <span class="not">ошибка!</span><br>';
+            }
+        });
+        store.result.innerHTML += 'Общая оценка: ' + Math.ceil(store.pointsForTest) + ' баллов.<br>';
+        window.scrollTo(0, document.body.scrollHeight);
+    });
+
+
+}());

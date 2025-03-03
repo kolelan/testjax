@@ -84,16 +84,21 @@
         const answers = document.querySelectorAll('.' + params.ids.answerRadioTagClass);
         answers.forEach(function (answer) {
             if (answer.checked) {
-                store.userAnswers.push(answer.getAttribute('data-answer'));
+                let index = answer.name.split('_').pop();
+                store.userAnswers.push({index: index, answer: answer.getAttribute('data-answer')});
             }
         });
-        store.userAnswers.forEach(function (answer, index) {
-            let numQuestion = parseInt(index) + 1;
-            if (answer === store.rightAnswers[index]) {
+        store.userAnswers.forEach(function (answer) {
+            const key = answer.index;
+            const  value = answer.answer;
+            console.log(answer,key, value);
+
+            let numQuestion = parseInt(key) + 1;
+            if (value === store.rightAnswers[key]) {
                 store.pointsForTest += store.pointsPerQuestion;
-                store.result.innerHTML += 'Вопрос ' + numQuestion + ': "' + answer + '" <span class="yes">правильно!</span><br>';
+                store.result.innerHTML += 'Вопрос ' + numQuestion + ': "' + value + '" <span class="yes">правильно!</span><br>';
             } else {
-                store.result.innerHTML += 'Вопрос ' + numQuestion + ': "' + answer + '" <span class="not">ошибка!</span><br>';
+                store.result.innerHTML += 'Вопрос ' + numQuestion + ': "' + value + '" <span class="not">ошибка!</span> Правильный, это ' + store.rightAnswers[key] + '<br>';
             }
         });
         store.result.innerHTML += 'Общая оценка: ' + Math.ceil(store.pointsForTest) + ' баллов.<br>';

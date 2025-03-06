@@ -4,8 +4,9 @@
     const params = {
         messages: {
             resultTimeMessage: "Выполнено за ",
-            resultSuccessMessage: "Результаты позволяют приступить к следующему заданию!",
-            resultUnsuccessMessage: "Рекомендуется пройти тест повторно",
+            resultSuccessMessage: "Вы прекрасно готовы к следующему уроку!",
+            resultMidlMessage: "У Вас есть некоторые пробелы. Обязательно обратите внимание на свои ошибки!",
+            resultUnsuccessMessage: "Вам нужно срочно подтянуть свои знания хотя бы до уровня ЕГЭ!",
         },
         ids: {
             root: "#rootQuestions",
@@ -21,7 +22,12 @@
             resultTag: "div",
             resultId: "result",
         },
-        successPoints: 60,
+        countdown: {
+            minutes: 5,
+            seconds: 0,
+        },
+        successPoints: 80,
+        midlPoints: 59,
         startTestTime: undefined,
         endTestTime: undefined,
     }
@@ -45,21 +51,19 @@
         }
         store.allQuestions = document.querySelectorAll(params.ids.question);
         store.allQuestions.forEach(function (question, i) {
-            const form = document.createElement('form');
+            const form = document.createElement('div');
             form.className = params.ids.answerFormClass;
             answers[i].forEach(function (answer, j) {
                 const answerItem = document.createElement(params.ids.answerItemTag);
                 answerItem.className = params.ids.answerItemClass;
-                const input = document.createElement('input');
-                const label = document.createElement('label');
                 const id = 'answer_' + i + '_' + j;
-                input.id = id;
-                label.htmlFor = id;
-                label.innerHTML = answer.name;
-                input.setAttribute('data-answer', answer.name);
-                input.type = "radio";
-                input.name = params.ids.answerRadioTagName + "_" + i;
-                input.className = params.ids.answerRadioTagClass;
+                const input = radioInput({
+                    id: id,
+                    name: params.ids.answerRadioTagName + '_' + i,
+                    className: params.ids.answerRadioTagClass,
+                    dataAnswer: answer.name,
+                })
+                const label = Label({forId: id, innerHtml: answer.name});
                 answerItem.append(input);
                 answerItem.append(label);
                 form.append(answerItem);
@@ -68,7 +72,16 @@
         });
         store.result = document.createElement(params.ids.resultTag);
         store.result.id = params.ids.resultId;
+        const Timer = CountdownTimer(
+            {
+                id: 'countdownTimer',
+                minutes: params.countdown.minutes,
+                seconds: params.countdown.seconds,
+            }
+        );
+
         document.body.append(store.result);
+        document.body.append(Timer);
 
     });
     store.done = document.querySelector(params.ids.done);
@@ -90,8 +103,8 @@
         });
         store.userAnswers.forEach(function (answer) {
             const key = answer.index;
-            const  value = answer.answer;
-            console.log(answer,key, value);
+            const value = answer.answer;
+            console.log(answer, key, value);
 
             let numQuestion = parseInt(key) + 1;
             if (value === store.rightAnswers[key]) {
@@ -104,9 +117,70 @@
         store.result.innerHTML += 'Общая оценка: ' + Math.ceil(store.pointsForTest) + ' баллов.<br>';
         if (Math.ceil(store.pointsForTest) > params.successPoints) {
             store.result.innerHTML += '<span class="yes">' + params.messages.resultSuccessMessage + '</span>';
+        } else if (Math.ceil(store.pointsForTest) > params.midlPoints) {
+            store.result.innerHTML += '<span class="midl">' + params.messages.resultMidlMessage + '</span>';
         } else {
             store.result.innerHTML += '<span class="not">' + params.messages.resultUnsuccessMessage + '</span>';
         }
         window.scrollTo(0, document.body.scrollHeight);
+        document.getElementById('countdownTimer').remove();
     });
+
+    function radioInput({id, name, className, dataAnswer}) {
+        const input = document.createElement('input');
+        input.id = id;
+        input.type = "radio";
+        input.name = name;
+        input.className = className;
+        input.setAttribute('data-answer', dataAnswer);
+        return input;
+    }
+
+    function Label({forId, innerHtml}) {
+        const label = document.createElement('label');
+        label.htmlFor = forId;
+        label.innerHTML = innerHtml;
+        return label;
+    }
+
+    function CountdownTimer({id, minutes, seconds}) {
+        const nowTime = new Date();
+        const endTime = new Date(
+            nowTime.setTime(
+                nowTime.getTime() + minutes * 60 * 1000 + seconds * 1000));
+        console.log(id, minutes, seconds);
+        let difference = endTime.getTime() - (new Date()).getTime();
+        console.log(difference)
+        const min = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const sec = Math.floor((difference % (1000 * 60)) / 1000);
+        const display = document.createElement('div');
+        display.id = id;
+        const minutesNode = document.createElement('span');
+        minutesNode.id = id + "Minutes";
+        minutesNode.innerHTML = ("0" + min).substr(-2);
+        const separator = document.createElement('span');
+        separator.id = id + "Separator";
+        const secondsNode = document.createElement('span');
+        secondsNode.id = id + "Seconds";
+        secondsNode.innerHTML = ("0" + sec).substr(-2);
+        display.append(minutesNode);
+        display.append(separator);
+        display.append(secondsNode);
+        const intervalId = setInterval(() => {
+            const now = new Date();
+            const countedTime = endTime.getTime() - now.getTime();
+            const min = ('0' + Math.floor((countedTime % (1000 * 60 * 60)) / (1000 * 60))).substr(-2);
+            const sec = ('0' + Math.floor((countedTime % (1000 * 60)) / 1000)).substr(-2);
+            if (countedTime <= 0) {
+                clearInterval(intervalId);
+                store.done.click();
+                minutesNode.innerHTML = '00';
+                secondsNode.innerHTML = '00';
+            } else {
+                minutesNode.innerHTML = min;
+                secondsNode.innerHTML = sec;
+            }
+        }, 1000);
+        return display;
+    }
 }());

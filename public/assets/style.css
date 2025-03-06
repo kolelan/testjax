@@ -1,4 +1,7 @@
-
+@font-face {
+    font-family: 'Segment7';
+    src: url('/assets/fonts/Segment7Standard.otf');
+}
 .test_title {
     width: 700px;
     margin: 20px auto;
@@ -43,7 +46,9 @@
 }
 #result .yes {
     color: green !important;
-
+}
+#result .midl {
+    color: orange !important;
 }
 #result .not {
     color: red !important;
@@ -63,4 +68,20 @@
     border: 3px solid #ffcc80;
     border-radius: 5px;
     padding: 8px;
+}
+#countdownTimer{
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-family: Segment7Standard,Segment7,sans-serif;
+    font-size: 30px;
+}
+#countdownTimerSeparator{
+    display: inline-block;
+    width: 10px;
+    background-size: 3px;
+    background-image: url("/assets/icon_delimeter.svg");
+    background-position: center 5px;
+    background-repeat: no-repeat;
+    height: 23px;
 }
